@@ -1,42 +1,46 @@
-import { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import Image from "../Common/Image";
+import Slider from "../Languages/Slider"
 
-function chat() {
 
+function Chat() {
 
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
+
+
     const chatContainerRef = useRef();
 
     useEffect(() => {
-        const delay = 1000; 
-    
-        const timer = setTimeout(() => {
-          const initialResponse = "Welcome to the chat bot! How can I assist you?";
-          setMessages([{ text: initialResponse, from: "bot" }]);
-        }, delay);
-    
-        return () => clearTimeout(timer); 
-      }, []);
+        const initialResponse = "Please choose the language for the AI travel assistant.";
+
+        setMessages([
+            { text: initialResponse, from: "bot" },
+        ]);
+    }, []);
 
     useEffect(() => {
-
+        
         chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }, [messages]);
 
-    const sendMessage = async () => {
-        if (!input) return;
-        const response = await fetch(
-            "http://localhost:5005/webhooks/rest/webhook",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ message: input }),
-            }
-        );
+    const sendMessage = async (message) => {
+        if (!message) return;
+
+        const payload = {
+            message: message,
+        };
+
+        const response = await fetch("http://localhost:5005/webhooks/rest/webhook", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+        });
+
         const data = await response.json();
-        setMessages([...messages, { text: input, from: "user" }, ...data]);
+        setMessages([...messages, { text: message, from: "user" }, ...data]);
         setInput("");
     };
 
@@ -44,45 +48,49 @@ function chat() {
         setMessages([]);
     };
 
-
     return (
-        <div className='w-full bg-[#EEEEEE]  '>
-            <div className={`flex flex-col overflow-y-auto w-full p-6 ${messages.length > 0 ? "h-[calc(100vh-150px)]" : "h-[calc(100vh-100px)]"}`} ref={chatContainerRef}>
+        <div className="w-full bg-[#EEEEEE] font-Urbanist">
+
+
+            {/* Chat messages */}
+            <div
+                className={`flex flex-col overflow-y-auto w-full p-6 ${messages.length > 0 ? "h-[calc(100vh-150px)]" : "h-[calc(100vh-100px)]"
+                    }`}
+                ref={chatContainerRef}
+            >
                 {messages.map((message, index) => (
                     <div
                         key={index}
-                        className={`p-2 my-1  ${message.from === "user" ? "bg-[#385B66] self-end rounded-l-lg rounded-r px-6 mr-2" : "bg-[#FFFFFF] self-start rounded-r-2xl"
+                        className={`${message.from === "user"
+                            ? "bg-[#385B66] self-end rounded-l-lg rounded-r px-6 mr-2"
+                            : " self-start "
                             }`}
-                        style={{ maxWidth: "70%" }}
+                        style={{ maxWidth: "50%" }}
                     >
                         {message.from === "user" ? (
                             message.text
                         ) : (
-                            <div className="relative my-4">
-                                <div className="absolute -top-12 -left-6 bg-white rounded-full p-2 ">
-                                    <div className="w-8 h-8 flex justify-center items-center">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            className="feather feather-user"
-                                        >
-                                            <circle cx="12" cy="12" r="10" />
-                                            <path d="M2 21c0-6.333 4.667-11 11-11s11 4.667 11 11" />
-                                        </svg>
+                            <div className="flex items-start justify-center gap-2">
+                                <div className=" bg-white rounded-full p-4  ">
+                                    <div className="flex justify-center items-center">
+                                        <Image src={"/Images/svgs/bot.svg"} alt={"bot_svg"} h={32} w={32} />
                                     </div>
                                 </div>
-                                <div className="ml-10">{message.text}</div>
+                                <div>
+                                    <p className="text-[#969696] font-medium text-[14px]">AI Travel Assistant • 03:00 pm</p>
+                                    <div className="bg-[#FFFFFF] px-3 py-2 rounded-r-2xl rounded-bl-2xl text-[16px] font-medium">
+                                        {message.text}
+                                    </div>
+                                </div>
                             </div>
                         )}
                     </div>
                 ))}
-
+                <Slider />
             </div>
+
+
+            {/* Input box */}
             <div className="flex mt-4 w-full mx-auto">
                 <div className="flex mx-auto w-full relative">
                     <input
@@ -93,7 +101,7 @@ function chat() {
                         className="w-full  px-4 py-6 "
                     />
                     <div className="absolute right-0 top-0 h-full flex justify-center items-center gap-3">
-                        <button onClick={sendMessage} className="py-2 bg-blue rounded-lg">
+                        <button onClick={() => sendMessage(input)} className="py-2 bg-blue rounded-lg">
                             Send
                         </button>
                         <button onClick={clearChat} className="px-1 py-2 bg-blue rounded-lg">
@@ -103,7 +111,7 @@ function chat() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default chat
+export default Chat;
