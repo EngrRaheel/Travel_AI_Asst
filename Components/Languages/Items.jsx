@@ -13,11 +13,9 @@ function LanguageOptions({ languageOptions, selectedLanguage, setSelectedLanguag
                     key={option.value}
                     className={`mr-2 ${selectedLanguage === option.value ? "bg-blue-500 text-white" : ""}`}
                 >
-                    <div
-                        className="rounded-lg p-2 bg-white border shadow-md w-28 h-28 "
-                    >
+                    <div className="rounded-lg p-2 bg-white border shadow-md w-28 h-28 ">
                         <img
-                            src={img} 
+                            src={img}
                             alt={`${option.label} Flag`}
                             className="w-full h-full object-cover rounded-lg"
                         />

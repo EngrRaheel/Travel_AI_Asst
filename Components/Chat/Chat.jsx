@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import Image from "../Common/Image";
 import Slider from "../Languages/Slider"
 
@@ -20,7 +20,7 @@ function Chat() {
     }, []);
 
     useEffect(() => {
-        
+
         chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }, [messages]);
 

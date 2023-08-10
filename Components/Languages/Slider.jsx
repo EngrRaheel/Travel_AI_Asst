@@ -59,13 +59,13 @@ export default function App({ selectedLanguage, setSelectedLanguage, handleSendM
     return (
         <>
             <Swiper
-                slidesPerView={3}
+                slidesPerView={5}
                 spaceBetween={30}
                 pagination={{
                     clickable: true,
                 }}
                 modules={[Pagination]}
-                className="mySwiper"
+                className="mySwiper max-w-2xl mt-4"
             >
                 {languageOptions.map((option) => (
                     <SwiperSlide key={option.value}>
