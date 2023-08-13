@@ -1,71 +1,68 @@
 import React, { useRef, useState } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-
 // Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/pagination';
+// import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 // import required modules
-import { Pagination } from 'swiper/modules';
+import { Navigation } from 'swiper/modules';
 import Items from "./Items"
 
-export default function App({ selectedLanguage, setSelectedLanguage, handleSendMessage, setMessage }) {
+export default function Slider({ selectedLanguage, setSelectedLanguage, handleSendMessage, setMessage, handleLanguageSelection }) {
 
     const languageOptions = [
         {
             label: "English",
-            value: "speak in english",
-            image: "english_image_url.jpg"
+            value: "Speak in English",
+            image: "/Images/flags/united-kingdom.svg"
         },
         {
             label: "Spanish",
             value: "Speak in Spanish",
-            image: "spanish_image_url.jpg"
+            image: "/Images/flags/spain.svg"
         },
         {
             label: "French",
             value: "Speak in French",
-            image: "french_image_url.jpg"
+            image: "/Images/flags/france.svg"
         },
         {
-            label: "Chinese",
-            value: "用中文说话",
-            image: "chinese_image_url.jpg"
+            label: "Portuguese",
+            value: "Speak in Portuguese",
+            image: "/Images/flags/portugal.svg"
         },
         {
-            label: "Arabic",
-            value: "تحدث باللغة العربية",
-            image: "arabic_image_url.jpg"
+            label: "Italian",
+            value: "Speak in Italian",
+            image: "/Images/flags/italy.svg"
         },
         {
-            label: "Hindi",
-            value: "हिंदी में बात करें",
-            image: "hindi_image_url.jpg"
+            label: "Netherlands",
+            value: "Speak in Dutch",
+            image: "/Images/flags/dutch.png"
         },
         {
-            label: "Russian",
-            value: "Говорите по-русски",
-            image: "russian_image_url.jpg"
+            label: "Israel",
+            value: "Speak in Hebrew",
+            image: "/Images/flags/israel.png"
         },
-        {
-            label: "Japanese",
-            value: "日本語で話してください",
-            image: "japanese_image_url.jpg"
-        },
+         {
+            label: "Saudi Arabia",
+            value: "Speak in Arabic",
+            image: "/Images/flags/saudiarabia.png"
+         }
+
     ];
-
-
 
     return (
         <>
             <Swiper
                 slidesPerView={5}
-                spaceBetween={30}
-                pagination={{
-                    clickable: true,
-                }}
-                modules={[Pagination]}
-                className="mySwiper max-w-2xl mt-4"
+                spaceBetween={20}
+                navigation={true}
+                modules={[Navigation]}
+                className="mySwiper w-full mt-4 overflow-hidden w-full"
             >
                 {languageOptions.map((option) => (
                     <SwiperSlide key={option.value}>
@@ -75,11 +72,16 @@ export default function App({ selectedLanguage, setSelectedLanguage, handleSendM
                             setSelectedLanguage={setSelectedLanguage}
                             sendMessage={handleSendMessage}
                             setMessage={setMessage}
+                            handleLanguageSelection={handleLanguageSelection}
                             img={option.image}
+                            name={option.name}
+                            label={option.label}
+                            value={option.value}
+
                         />
                     </SwiperSlide>
                 ))}
             </Swiper>
-        </> 
+        </>
     );
 }

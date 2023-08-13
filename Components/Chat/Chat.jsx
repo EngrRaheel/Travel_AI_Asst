@@ -1,23 +1,43 @@
 import { useRef, useEffect, useState } from "react";
+import Images from "../Common/Image";
 import Image from "../Common/Image";
-import Slider from "../Languages/Slider"
-
+import Slider from "../Languages/Slider";
+import SearchOptSlider from "../Searchoption/SearchOptSlider";
 
 function Chat() {
 
+    const [selectedLanguage, setSelectedLanguage] = useState("Speak in English");
+
+    const handleLanguageSelection = (selectedValue) => {
+        setSelectedLanguage(selectedValue);
+        console.log("selected langugae", selectedLanguage)
+        sendMessage(selectedValue);
+    };
+
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
-
+    //this is for he language component
+    // const [languageComponent, setLanguageComponent] = useState(false)
 
     const chatContainerRef = useRef();
 
-    useEffect(() => {
-        const initialResponse = "Please choose the language for the AI travel assistant.";
+    // current time
+    const currentTime = new Date();
+    const formattedTime = currentTime.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+    });
 
-        setMessages([
-            { text: initialResponse, from: "bot" },
-        ]);
-    }, []);
+    console.log(`Current time: ${formattedTime}`);
+
+    // useEffect(() => {
+    //     const initialResponse = "Please choose the language for the AI travel assistant.";
+    //     setLanguageComponent(true)
+    //     setMessages([
+    //         { text: initialResponse, from: "bot" },
+    //     ]);
+    // }, []);
 
     useEffect(() => {
 
@@ -50,11 +70,36 @@ function Chat() {
 
     return (
         <div className="w-full bg-[#EEEEEE] font-Urbanist">
+            <div className={`flex flex-col px-2 py-6 w-full"}`} ref={chatContainerRef} >
+                <div className="self-start" style={{ maxWidth: "50%" }}>
+                    <div className="flex items-start justify-center gap-2">
+                        <div className="bg-white rounded-full p-4">
+                            <div className="flex justify-center items-center">
+                                <Image src={"/Images/svgs/bot.svg"} alt={"bot_svg"} h={32} w={32} />
+                            </div>
+                        </div>
+                        <div>
+                            <p className="text-[#969696] font-medium text-[14px]">
+                                AI Travel Assistant • {formattedTime}
+                            </p>
+                            <div className="bg-[#FFFFFF] px-3 py-2 rounded-r-2xl rounded-bl-2xl text-[16px] font-medium">
+                                Please choose the language for the AI travel assistant.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <Slider
+                    selectedLanguage={selectedLanguage}
+                    setSelectedLanguage={setSelectedLanguage}
+                    setMessage={setMessages}
+                    handleLanguageSelection={handleLanguageSelection}
+                />
+            </div>
 
 
             {/* Chat messages */}
             <div
-                className={`flex flex-col overflow-y-auto w-full p-6 ${messages.length > 0 ? "h-[calc(100vh-150px)]" : "h-[calc(100vh-100px)]"
+                className={`flex flex-col overflow-y-auto w-full py-6 pl-2 ${messages.length > 0 ? "h-[calc(100vh-150px)]" : "h-[calc(100vh-100px)]"
                     }`}
                 ref={chatContainerRef}
             >
@@ -62,7 +107,7 @@ function Chat() {
                     <div
                         key={index}
                         className={`${message.from === "user"
-                            ? "bg-[#385B66] self-end rounded-l-lg rounded-r px-6 mr-2"
+                            ? "bg-[#385B66] self-end rounded-l-lg rounded-r px-4 py-2 mr-2 text-white"
                             : " self-start "
                             }`}
                         style={{ maxWidth: "50%" }}
@@ -86,7 +131,8 @@ function Chat() {
                         )}
                     </div>
                 ))}
-                <Slider />
+
+                <SearchOptSlider />
             </div>
 
 

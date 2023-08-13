@@ -1,33 +1,26 @@
-import React from "react";
+import { useState } from "react";
+import Images from "../Common/Image";
+function LanguageOptions({ selectedLanguage, img, value, label, handleLanguageSelection }) {
 
-function LanguageOptions({ languageOptions, selectedLanguage, setSelectedLanguage, sendMessage, img }) {
-    const handleLanguageSelection = (selectedValue) => {
-        setSelectedLanguage(selectedValue);
-        sendMessage(selectedValue);
-    };
 
     return (
-        <div className="flex">
-            {languageOptions.map((option) => (
-                <div
-                    key={option.value}
-                    className={`mr-2 ${selectedLanguage === option.value ? "bg-blue-500 text-white" : ""}`}
-                >
-                    <div className="rounded-lg p-2 bg-white border shadow-md w-28 h-28 ">
-                        <img
-                            src={img}
-                            alt={`${option.label} Flag`}
-                            className="w-full h-full object-cover rounded-lg"
-                        />
-                    </div>
-                    <button
-                        onClick={() => handleLanguageSelection(option.value)}
-                        className={`rounded-full py-1 px-3 mt-2 ${selectedLanguage === option.value ? "bg-blue-500 text-white" : ""}`}
-                    >
-                        {option.label}
-                    </button>
+        <div className="flex bg-white justify-center items-center rounded-2xl w-28 h-28 font-Urbanist">
+            <div className={`flex flex-col justify-center items-center gap-2 text-[#505050] ${selectedLanguage === `${value}` ? "bg-white" : ""}`} >
+                <div className="flex justify-center items-center ">
+                    <Images
+                        src={img}
+                        alt={`Flag_${value}`}
+                      
+                        h={40} w={40}
+                    />
                 </div>
-            ))}
+                <button
+                    onClick={() => handleLanguageSelection(value)}
+                    className={`text-[14] font-semibold ${selectedLanguage === `${value}` ? "bg-white" : "bg-white"}`} >
+                    {label}
+                </button>
+            </div>
+
         </div>
     );
 }
