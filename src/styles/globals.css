@@ -30,3 +30,13 @@ body {
 /* .swiper-pagination-bullet {
   background-color: #00ff1e;
 } */
+
+::-webkit-scrollbar {
+  width: 6px;  /* width of the scrollbar */
+}
+
+/* Customize the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* color of the thumb */
+  border-radius: 5px;     /* rounded corners */
+}

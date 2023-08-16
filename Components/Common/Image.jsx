@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 function Images({ src, alt, w, h }) {
     return (
-        <div className={`relative`}>
+        <div className="">
             <Image
                 src={src}
                 alt={alt}

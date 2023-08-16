@@ -62,7 +62,7 @@ export default function Slider({ selectedLanguage, setSelectedLanguage, handleSe
                 spaceBetween={20}
                 navigation={true}
                 modules={[Navigation]}
-                className="mySwiper w-full mt-4 overflow-hidden w-full"
+                className="mySwiper w-full mt-4 overflow-hidden"
             >
                 {languageOptions.map((option) => (
                     <SwiperSlide key={option.value}>
