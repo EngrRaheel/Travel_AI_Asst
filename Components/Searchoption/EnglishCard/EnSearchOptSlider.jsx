@@ -1,17 +1,9 @@
 import React, { useRef, useState } from 'react';
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-// Import Swiper styles
 import 'swiper/css';
-// import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-// import required modules
 import { Navigation } from 'swiper/modules';
-import Items from "./SearchOptItem"
-import SearchOptItem from './SearchOptItem';
-
-import { AiOutlineArrowLeft } from "react-icons/ai"
-import { AiOutlineArrowRight } from "react-icons/ai"
+import SearchOptItem from '../SearchOptItem';
 
 
 

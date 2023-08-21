@@ -5,7 +5,7 @@ import LocationAutoComplete from "../Cityautocomplete/LoactionAutoComplete";
 import Images from "../Common/Image";
 import Image from "../Common/Image";
 import Slider from "../Languages/Slider";
-import SearchOptSlider from "../Searchoption/SearchOptSlider";
+import SearchOptSlider from "../Searchoption/EnglishCard/EnSearchOptSlider";
 import Input from "./Input";
 import { loadScript } from "@react-google-maps/api";
 
@@ -17,7 +17,7 @@ function Chat() {
     const [cityName, setCityName] = useState('');
 
 
-
+    const [botIsTyping, setBotIsTyping] = useState(false);
 
     const handleLanguageSelection = (selectedValue) => {
         setSelectedLanguage(selectedValue);
@@ -55,6 +55,8 @@ function Chat() {
     const sendMessage = async (message) => {
         if (!message) return;
 
+
+        setBotIsTyping(true);
         const payload = {
             message: message,
         };
@@ -69,7 +71,7 @@ function Chat() {
         });
 
 
-
+        setBotIsTyping(false);
 
         const data = await response.json();
         console.log("data", data);
@@ -140,6 +142,7 @@ function Chat() {
                 <div
                     className={`flex flex-col  w-full py-6  ${messages.length > 0 ? "h-[41vh]" : "h-[41vh]"
                         }`} >
+                    {botIsTyping && <div>Bot is typing...</div>}
                     {messages.map((message, index) => (
 
                         <div
