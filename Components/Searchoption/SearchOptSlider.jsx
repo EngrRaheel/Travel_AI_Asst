@@ -17,6 +17,8 @@ import { AiOutlineArrowRight } from "react-icons/ai"
 
 export default function Slider({ handleSendMessage, setMessage, handleOptSelection }) {
 
+    // const API = AIzaSyAPL-ejfLfY6XIFSI1mFKdnCtCtD_gZcFU
+
     const CardItems = [
         {
             img: "/Images/searchOptions/search_flights.svg",

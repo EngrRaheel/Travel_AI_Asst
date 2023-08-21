@@ -17,7 +17,7 @@ body {
   border-radius: 50%;
   padding: 20px;
 }
-.swiper-button-prev:after ,
+.swiper-button-prev:after,
 .swiper-button-next:after {
   font-family: swiper-icons;
   font-size: 24px !important;
@@ -25,18 +25,107 @@ body {
   letter-spacing: 0;
   font-variant: initial;
   line-height: 1;
-  color: #5BB08B;
+  color: #5bb08b;
 }
 /* .swiper-pagination-bullet {
   background-color: #00ff1e;
 } */
 
+.mantine-1oi1j92 button {
+  color: #5bb08b;
+  font-size: 16px;
+  font-weight: 700;
+}
+
 ::-webkit-scrollbar {
-  width: 6px;  /* width of the scrollbar */
+  width: 6px; /* width of the scrollbar */
 }
 
 /* Customize the scrollbar thumb */
 ::-webkit-scrollbar-thumb {
   background-color: #888; /* color of the thumb */
-  border-radius: 5px;     /* rounded corners */
+  border-radius: 5px; /* rounded corners */
+}
+
+/* ====> shadows */
+.headerShadow {
+  box-shadow: 0px 10px 20px rgba(115, 103, 240, 0.4);
+}
+.campaignsShadow {
+  box-shadow: 0px 4px 18px rgba(75, 70, 92, 0.1);
+}
+.iconShadow {
+  box-shadow: 0px 2px 4px rgba(165, 163, 174, 0.3);
+}
+.dateShadow {
+  box-shadow: 0px 4px 16px rgba(165, 163, 174, 0.45);
+}
+/* date picker style */
+.mantine-1j3kskz[data-in-range] {
+  background-color: #e9e7fd;
+  color: #6c59f5;
+}
+/* ===> mantine checkbox style */
+.mantine-1dhhbuc:checked {
+  background-color: #6c59f5 !important;
+  border-color: #6c59f5 !important;
+}
+/* ====> mantane range slider styles */
+.thumShadow {
+  box-shadow: 0px 2px 4px rgba(165, 163, 174, 0.3);
+}
+
+
+.label::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -30px;
+  width: 1px;
+  height: 25px;
+  background-color: #dfdfe2;
+  transform: translateX(-50%);
+}
+/* ===> mantane select style */
+.selectIcon svg {
+  color: white !important;
+  width: 25px !important;
+  height: 25px !important;
+}
+
+/* mantine colum styling both the months in the column*/
+.mantine-o00rr2 {
+  display: flex !important;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+/* backgroun of the individual month in the calender */
+.mantine-1oi1j92 {
+  background: #ffffff !important;
+  border-radius: 16px;
+  padding: 10px;
+  min-height: 310px;
+}
+
+.mantine-7yisjr[data-weekend] {
+  color: #505050;
+  background: #f6f6f7;
+}
+
+/* mantine colored dated */
+.mantine-7yisjr {
+  color: #888 !important;
+  font-size: 12px !important;
+}
+
+.css-1fdsijx-ValueContainer,
+.css-13cymwt-control {
+  width: 100%;
+  padding-left: 12px;
+  padding-right:12px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  margin-top: 8px;
 }
