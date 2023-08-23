@@ -46,11 +46,12 @@ function Chat() {
     const processResponseData = (data) => {
         console.log("data", data);
         return data.map((responseMessage) => {
-            if (responseMessage.text.includes(":") && responseMessage.text.includes("400")) {
-                const [recipient, contents] = responseMessage.text.split(":");
-                const content = recipient + contents
-                return { recipient, content };
-            } else if (responseMessage.text.includes(":")) {
+            // if (responseMessage.text.includes(":") && responseMessage.text.includes("400")) {
+            //     const [recipient, contents] = responseMessage.text.split(":");
+            //     const content = recipient + contents
+            //     return { recipient, content };
+            // } else 
+            if (responseMessage.text.includes(":")) {
                 const [recipient, content] = responseMessage.text.split(":");
                 setInputDisplay(recipient === "Location");
                 return { recipient, content };
@@ -87,7 +88,8 @@ function Chat() {
                 ...processedData,
             ]);
 
-            console.log("message", messages);
+
+            console.log("processed data", processedData);
             if (messagesContainerRef.current) {
                 messagesContainerRef.current.scrollIntoView({
                     behavior: "smooth",
