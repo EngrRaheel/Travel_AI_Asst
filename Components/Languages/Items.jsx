@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Images from "../Common/Image";
-function LanguageOptions({ selectedLanguage, img, value, label, handleLanguageSelection }) {
+function  LanguageOptions({ selectedLanguage, img, value, label, handleLanguageSelection }) {
 
 
     return (
@@ -20,7 +20,6 @@ function LanguageOptions({ selectedLanguage, img, value, label, handleLanguageSe
                     {label}
                 </button>
             </div>
-
         </div>
     );
 }

@@ -1,11 +1,7 @@
 import React, { useRef, useState } from 'react';
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-// Import Swiper styles
 import 'swiper/css';
-// import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-// import required modules
 import { Navigation } from 'swiper/modules';
 import Items from "./Items"
 
@@ -47,11 +43,11 @@ export default function Slider({ selectedLanguage, setSelectedLanguage, handleSe
             value: "Speak in Hebrew",
             image: "/Images/flags/israel.png"
         },
-         {
+        {
             label: "Saudi Arabia",
             value: "Speak in Arabic",
             image: "/Images/flags/saudiarabia.png"
-         }
+        }
 
     ];
 

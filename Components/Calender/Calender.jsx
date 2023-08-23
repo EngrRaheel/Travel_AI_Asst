@@ -1,19 +1,36 @@
 import { useState } from 'react';
-
 import { Group, Text, Title, UnstyledButton, Indicator } from '@mantine/core';
-import { RxCross2 } from 'react-icons/rx';
 import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
 import { DatePicker } from '@mantine/dates';
-// import ButtonWithIcon from '../shared/Button/ButtonWithIcon';
-// import { useCampaignContext } from '../../Context/CompaignContext';
 
-const CampaignDuration = ({  }) => {
 
-    const [value, setValue] = useState([null, null])
-    const handlevalue = (value) => {
-        setValue()
-        console.log(value)
-    }
+const CampaignDuration = ({ onUpdateDateRange, setMessages, sendMessage }) => {
+
+    const handleDateRangeChange = (newDateRange) => {
+
+
+
+        const startDate = newDateRange[0] ? newDateRange[0].toLocaleDateString("en-GB") : '';
+        const endDate = newDateRange[1] ? newDateRange[1].toLocaleDateString('en-GB') : '';
+        // const message = `${startDate}`;
+
+        const formattedStartDate = startDate ? formatDate(startDate) : '';
+        const formattedEndDate = endDate ? formatDate(endDate) : '';
+
+        const message = `${formattedStartDate}`;
+
+        function formatDate(dateString) {
+            const parts = dateString.split('/');
+            return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+        }
+
+
+        onUpdateDateRange(message);
+
+
+        // setMessages((prevMessages) => [...prevMessages, { text: message, from: 'user' }]);
+
+    };
     return (
         <div className="w-full bg-[#eeeeee] my-4 flex flex-col  justify-center items-center rounded-[16px] relative font-Urbanist">
             <div className="">
@@ -54,10 +71,9 @@ const CampaignDuration = ({  }) => {
                             },
                         })}
                         type="range"
-
                         numberOfColumns={2}
                         columngap={16}
-                        onChange={handlevalue}
+                        onChange={handleDateRangeChange}
 
                     />
                 </div>

@@ -3,7 +3,7 @@ import Images from '../Common/Image'
 
 
 
-function SearchOptItem({ img, icon, title, para, searchbtn, handleOptSelection,btnMessage }) {
+function SearchOptItem({ img, icon, title, para, searchbtn, handleOptSelection, btnMessage, min_h }) {
     return (
         <>
             <div className="bg-white rounded-2xl shadow-md  font-Urbanist w-full">
@@ -14,7 +14,7 @@ function SearchOptItem({ img, icon, title, para, searchbtn, handleOptSelection,b
                         w={232} h={120}
                     />
                 </div>
-                <div className="flex flex-col justify-between py-4 px-3 w-full  mx-auto   min-h-[160px]">
+                <div className={`flex flex-col justify-between py-4 px-3 w-full  mx-auto   min-h-[${min_h}]`}>
                     <div className='w-full flex flex-col gap-4 '>
                         <div className="flex justify-start items-center gap-2">
                             <Images

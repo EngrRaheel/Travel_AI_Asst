@@ -9,8 +9,6 @@ import SearchOptItem from '../SearchOptItem';
 
 export default function Slider({ handleSendMessage, setMessage, handleOptSelection }) {
 
-    // const API = AIzaSyAPL-ejfLfY6XIFSI1mFKdnCtCtD_gZcFU
-
     const CardItems = [
         {
             img: "/Images/searchOptions/search_flights.svg",
@@ -108,6 +106,7 @@ export default function Slider({ handleSendMessage, setMessage, handleOptSelecti
                             sendMessage={handleSendMessage}
                             setMessage={setMessage}
                             btnMessage={item.btnMessage}
+                            min_h={"160px"}
                         />
                     </SwiperSlide>
                 ))}
