@@ -27,7 +27,7 @@ const PlaceSearch = ({ setCityName, sendMessage }) => {
     }
   }, []);
 
-  const handlePlaceSelect = (placeId) => {
+  const handlePlaceSelect = useCallback((placeId) => {
     const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode({ placeId }, (results, status) => {
       if (status === window.google.maps.GeocoderStatus.OK && results[0]) {
@@ -41,14 +41,15 @@ const PlaceSearch = ({ setCityName, sendMessage }) => {
         );
         const cityName = cityComponent ? cityComponent.short_name : '';
         setCityName(cityName);
+        
       }
     });
-  };
+  }, [setCityName]);
 
   return (
-    <div className="flex flex-col mt-4 w-full mx-auto">
+    <div className="flex flex-col mt-4 w-full mx-auto rounded-md">
       {suggestions.length > 0 && (
-        <ul className="mt-2 w-full mx-auto">
+        <ul className="mt-2 w-full mx-auto px-2 bg-[white]/75">
           {suggestions.map((suggestion) => (
             <li
               key={suggestion.place_id}
@@ -66,7 +67,7 @@ const PlaceSearch = ({ setCityName, sendMessage }) => {
           value={input}
           placeholder="Enter a location"
           onChange={handleInputChange}
-          className="w-full px-4 py-6 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+          className="w-full px-4 py-6 border border-y-[gray]/70 border-l-0 border-r-0 rounded outline-none "
         />
 
         <div className="absolute right-0 top-0 h-full flex justify-center items-center gap-3">

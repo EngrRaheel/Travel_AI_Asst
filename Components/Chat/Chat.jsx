@@ -1,15 +1,10 @@
 import { useRef, useEffect, useState } from "react";
-import Calender from "../Calender/Calender";
 import CityAutoComplete from "../Cityautocomplete/CityAutoComplete";
-import Images from "../Common/Image";
-import Image from "../Common/Image";
-import Slider from "../Languages/Slider";
-import SearchOptSlider from "../Searchoption/EnglishCard/EnSearchOptSlider";
 import Input from "./Input";
-import UserTyping from "../TypingAnimation/Typing";
 import ChatHeader from "./ChatHeader";
 import ChatMessages from "./ChatMessages";
 import { API_URL } from "../APIConfig/APIConfig";
+
 
 function Chat() {
     const [selectedLanguage, setSelectedLanguage] = useState("Speak in English");
@@ -26,6 +21,7 @@ function Chat() {
     const [showSearchOptions, setShowSearchOptions] = useState(false);
     const [selectedDateRange, setSelectedDateRange] = useState([null, null]);
 
+    const [contentArray, setContentArray] = useState([]);
     const handleUpdateDateRange = (newDateRange) => {
         setSelectedDateRange(newDateRange);
         sendMessage(newDateRange)
@@ -43,18 +39,30 @@ function Chat() {
         }
     }, [messages]);
 
+
+
+
     const processResponseData = (data) => {
         console.log("data", data);
+
         return data.map((responseMessage) => {
-            // if (responseMessage.text.includes(":") && responseMessage.text.includes("400")) {
-            //     const [recipient, contents] = responseMessage.text.split(":");
-            //     const content = recipient + contents
-            //     return { recipient, content };
-            // } else 
-            if (responseMessage.text.includes(":")) {
-                const [recipient, content] = responseMessage.text.split(":");
+
+            console.log("textt", responseMessage.text);
+
+            if (responseMessage.text.includes("$")) {
+                let [recipient, content] = responseMessage.text.split("$");
+                console.log("recipient or content", recipient, content)
                 setInputDisplay(recipient === "Location");
-                return { recipient, content };
+                if (recipient === "Flights Information") {
+                    console.log("hello T", content)
+                    content = content.replace(/"/g, ' ');
+                    setContentArray(content);
+                    // console.log("updated content", updatedContentArray);
+                    // console.log("contentArray", contentArray);
+                    return { recipient, content };
+                } else {
+                    return { recipient, content };
+                }
             } else {
                 return { content: responseMessage.text };
             }
@@ -75,6 +83,7 @@ function Chat() {
             });
 
             const data = await response.json();
+
             const processedData = processResponseData(data);
 
             console.log("prcessed data hon main", processedData);
@@ -96,7 +105,8 @@ function Chat() {
                     block: "end",
                 });
             }
-            setInput("");
+            setInput("")
+            setCityName("");
         } catch (error) {
             console.error("Error sending message:", error);
             setBotIsTyping(false);
@@ -132,9 +142,11 @@ function Chat() {
                     handleOptSelection={handleOptSelection}
                     handleUpdateDateRange={handleUpdateDateRange}
                     setSelectedDateRange={setSelectedDateRange}
+                    contentArray={contentArray}
 
                 />
             </div>
+
             {inputDisplay ? (
                 <CityAutoComplete setCityName={setCityName} sendMessage={sendMessage} />
             ) : (

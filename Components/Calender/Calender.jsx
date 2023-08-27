@@ -28,7 +28,6 @@ const CampaignDuration = ({ onUpdateDateRange, setMessages, sendMessage }) => {
         onUpdateDateRange(message);
 
 
-        // setMessages((prevMessages) => [...prevMessages, { text: message, from: 'user' }]);
 
     };
     return (
@@ -36,7 +35,7 @@ const CampaignDuration = ({ onUpdateDateRange, setMessages, sendMessage }) => {
             <div className="">
                 <div className='flex font-Urbanist'>
                     <DatePicker
-                        classNames={{ calendar: 'p-6' }}
+                        classNames={{ calendar: 'py-4 px-3' }}
                         styles={() => ({
                             calendar: {
                                 '& [data-first-in-range]': {
