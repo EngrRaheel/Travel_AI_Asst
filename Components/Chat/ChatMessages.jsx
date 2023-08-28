@@ -11,20 +11,20 @@ import Portuguese from '../Searchoption/PortugueseCard/PortSearchOptSlider'
 import Spanish from '../Searchoption/SpanishCard/SpSearchOptSlider'
 import Calender from '../Calender/Calender'
 import FlightSlider from '../Flights/FlightSlider'
-
+import HotelSlider from '../Hotels/HotelSlider'
 
 function ChatMessages({
     messages,
     botIsTyping,
     lastMessageRef,
-    messagesContainerRef,
     setMessages,
     handleOptSelection,
     setServiceOption,
     handleUpdateDateRange,
     setSelectedDateRange,
     sendMessages,
-    contentArray
+    contentArray,
+    contentHotel
 }) {
     return (
         <div
@@ -145,29 +145,39 @@ function ChatMessages({
                                                     message.recipient === "Flights Information" ? (
                                                         <>
                                                             <div className='w-full'>
-                                                                <p>this is test fight</p>
+
                                                                 <FlightSlider contentArray={contentArray} />
-                                                                
+
                                                             </div>
                                                         </>
-                                                    ) : (
-                                                        <div className="flex items-start justify-center gap-2">
-                                                            <div className="bg-white rounded-full p-4">
-                                                                <div className="flex justify-center items-center">
-                                                                    <Image src={"/Images/svgs/bot.svg"} alt={"bot_svg"} h={32} w={32} />
+                                                    ) :
+                                                        message.recipient === "Hotels Information" ? (
+                                                            <>
+                                                                <div className='w-full'>
+
+                                                                    <HotelSlider contentHotel={contentHotel} />
+
                                                                 </div>
-                                                            </div>
-                                                            <div className="flex flex-col justify-start items-start w-full">
-                                                                <p className="text-[#969696] font-medium text-[14px]">
-                                                                    AI Travel Assistant • {message.timestamp}
-                                                                </p>
-                                                                <div className="max-w-[60%] bg-[#FFFFFF] px-3 py-2 rounded-r-2xl rounded-bl-2xl text-[16px] font-medium">
-                                                                    {message.content}
-                                                                    <p>conete is herer</p>
+                                                            </>
+                                                        ) :
+                                                            (
+                                                                <div className="flex items-start justify-center gap-2">
+                                                                    <div className="bg-white rounded-full p-4">
+                                                                        <div className="flex justify-center items-center">
+                                                                            <Image src={"/Images/svgs/bot.svg"} alt={"bot_svg"} h={32} w={32} />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="flex flex-col justify-start items-start w-full">
+                                                                        <p className="text-[#969696] font-medium text-[14px]">
+                                                                            AI Travel Assistant • {message.timestamp}
+                                                                        </p>
+                                                                        <div className="max-w-[60%] bg-[#FFFFFF] px-3 py-2 rounded-r-2xl rounded-bl-2xl text-[16px] font-medium">
+                                                                            {message.content}
+
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    )
+                                                            )
                                         }
                                     </> :
                                     <>

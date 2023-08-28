@@ -1,49 +1,12 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
-
 import FlightsCard from './FlightsCard';
-
-// APIData = [{
-//     Amount: "465.76",
-//     Currency: "EUR",
-//     DepartureFlightLogo: "https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/LX.svg",
-//     DepartureAirport: "London City Airport",
-//     DepartureCountry: "GB",
-//     DepartureCode: "LCY",
-//     DepartureTime: "09:25:00",
-//     DepartureDate: "2023-09-09",
-//     ArrivalAirport: "Dubai International Airport",
-//     ArrivalCountry: "AE",
-//     ArrivalCode: "DXB",
-//     ArrivalTime: "20:55:00",
-//     ArrivalDate: "2023-09-09",
-//     Stops: "1",
-//     ReturnDepartureFlightLogo: "https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/LX.svg",
-//     ReturnDepartureAirport: "Dubai International Airport",
-//     ReturnDepartureCountry: "AE",
-//     ReturnDepartureCode: "DXB",
-//     ReturnDepartureTime: "01:15:00",
-//     ReturnDepartureDate: "2023-09-16",
-//     ReturnArrivalAirport: "London City Airport",
-//     ReturnArrivalCountry: "GB",
-//     ReturnArrivalCode: "LCY",
-//     ReturnArrivalTime: "08:50:00",
-//     ReturnArrivalDate: "2023-09-16",
-//     ReturnStops: "1"
-// }]
-
-// [{ Amount: '465.76', Currency: 'EUR', DepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/LX.svg', DepartureAirport: 'London City Airport', DepartureCountry: 'GB', DepartureCode: 'LCY', DepartureTime: '09:25:00', DepartureDate: '2023-09-09', ArrivalAirport: 'Dubai International Airport', ArrivalCountry: 'AE', ArrivalCode: 'DXB', ArrivalTime: '20:55:00', ArrivalDate: '2023-09-09', Stops: '1' , ReturnDepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/LX.svg', ReturnDepartureAirport:'Dubai International Airport', ReturnDepartureCountry: 'AE', ReturnDepartureCode:'DXB', ReturnDepartureTime: '01:15:00', ReturnDepartureDate: '2023-09-16', ReturnArrivalAirport: 'London City Airport', ReturnArrivalCountry: 'GB',ReturnArrivalCode: 'LCY', ReturnArrivalTime: '08:50:00', ReturnArrivalDate: '2023-09-16', Returnstops: '1' }, { Amount: '675.76', Currency: 'EUR', DepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/LX.svg', DepartureAirport: 'London City Airport', DepartureCountry: 'GB', DepartureCode: 'LCY', DepartureTime: '09:25:00', DepartureDate: '2023-09-09', ArrivalAirport: 'Dubai International Airport', ArrivalCountry: 'AE', ArrivalCode: 'DXB', ArrivalTime: '20:55:00', ArrivalDate: '2023-09-09', Stops: '1' , ReturnDepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/LX.svg', ReturnDepartureAirport:'Dubai International Airport', ReturnDepartureCountry: 'AE', ReturnDepartureCode:'DXB', ReturnDepartureTime: '01:15:00', ReturnDepartureDate: '2023-09-16', ReturnArrivalAirport: 'London City Airport', ReturnArrivalCountry: 'GB',ReturnArrivalCode: 'LCY', ReturnArrivalTime: '11:40:00', ReturnArrivalDate: '2023-09-16', Returnstops: '1' }, { Amount: '733.24', Currency: 'EUR', DepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/KL.svg', DepartureAirport: 'London City Airport', DepartureCountry: 'GB', DepartureCode: 'LCY', DepartureTime: '08:40:00', DepartureDate: '2023-09-09', ArrivalAirport: 'Dubai International Airport', ArrivalCountry: 'AE', ArrivalCode: 'DXB', ArrivalTime: '23:05:00', ArrivalDate: '2023-09-09', Stops: '1' , ReturnDepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/KL.svg', ReturnDepartureAirport:'Dubai International Airport', ReturnDepartureCountry: 'AE', ReturnDepartureCode:'DXB', ReturnDepartureTime: '00:55:00', ReturnDepartureDate: '2023-09-16', ReturnArrivalAirport: 'London City Airport', ReturnArrivalCountry: 'GB',ReturnArrivalCode: 'LCY', ReturnArrivalTime: '08:10:00', ReturnArrivalDate: '2023-09-16', Returnstops: '1' }, { Amount: '733.24', Currency: 'EUR', DepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/KL.svg', DepartureAirport: 'London City Airport', DepartureCountry: 'GB', DepartureCode: 'LCY', DepartureTime: '10:00:00', DepartureDate: '2023-09-09', ArrivalAirport: 'Dubai International Airport', ArrivalCountry: 'AE', ArrivalCode: 'DXB', ArrivalTime: '23:05:00', ArrivalDate: '2023-09-09', Stops: '1' , ReturnDepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/KL.svg', ReturnDepartureAirport:'Dubai International Airport', ReturnDepartureCountry: 'AE', ReturnDepartureCode:'DXB', ReturnDepartureTime: '00:55:00', ReturnDepartureDate: '2023-09-16', ReturnArrivalAirport: 'London City Airport', ReturnArrivalCountry: 'GB',ReturnArrivalCode: 'LCY', ReturnArrivalTime: '08:10:00', ReturnArrivalDate: '2023-09-16', Returnstops: '1' }, { Amount: '786.24', Currency: 'EUR', DepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/KL.svg', DepartureAirport: 'London City Airport', DepartureCountry: 'GB', DepartureCode: 'LCY', DepartureTime: '10:00:00', DepartureDate: '2023-09-09', ArrivalAirport: 'Dubai International Airport', ArrivalCountry: 'AE', ArrivalCode: 'DXB', ArrivalTime: '23:05:00', ArrivalDate: '2023-09-09', Stops: '1' , ReturnDepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/KL.svg', ReturnDepartureAirport:'Dubai International Airport', ReturnDepartureCountry: 'AE', ReturnDepartureCode:'DXB', ReturnDepartureTime: '00:55:00', ReturnDepartureDate: '2023-09-16', ReturnArrivalAirport: 'London City Airport', ReturnArrivalCountry: 'GB',ReturnArrivalCode: 'LCY', ReturnArrivalTime: '11:40:00', ReturnArrivalDate: '2023-09-16', Returnstops: '1' }, { Amount: '786.24', Currency: 'EUR', DepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/KL.svg', DepartureAirport: 'London City Airport', DepartureCountry: 'GB', DepartureCode: 'LCY', DepartureTime: '10:00:00', DepartureDate: '2023-09-09', ArrivalAirport: 'Dubai International Airport', ArrivalCountry: 'AE', ArrivalCode: 'DXB', ArrivalTime: '23:05:00', ArrivalDate: '2023-09-09', Stops: '1' , ReturnDepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/KL.svg', ReturnDepartureAirport:'Dubai International Airport', ReturnDepartureCountry: 'AE', ReturnDepartureCode:'DXB', ReturnDepartureTime: '00:55:00', ReturnDepartureDate: '2023-09-16', ReturnArrivalAirport: 'London City Airport', ReturnArrivalCountry: 'GB',ReturnArrivalCode: 'LCY', ReturnArrivalTime: '09:25:00', ReturnArrivalDate: '2023-09-16', Returnstops: '1' }, { Amount: '786.24', Currency: 'EUR', DepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/KL.svg', DepartureAirport: 'London City Airport', DepartureCountry: 'GB', DepartureCode: 'LCY', DepartureTime: '08:40:00', DepartureDate: '2023-09-09', ArrivalAirport: 'Dubai International Airport', ArrivalCountry: 'AE', ArrivalCode: 'DXB', ArrivalTime: '23:05:00', ArrivalDate: '2023-09-09', Stops: '1' , ReturnDepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/KL.svg', ReturnDepartureAirport:'Dubai International Airport', ReturnDepartureCountry: 'AE', ReturnDepartureCode:'DXB', ReturnDepartureTime: '00:55:00', ReturnDepartureDate: '2023-09-16', ReturnArrivalAirport: 'London City Airport', ReturnArrivalCountry: 'GB',ReturnArrivalCode: 'LCY', ReturnArrivalTime: '11:40:00', ReturnArrivalDate: '2023-09-16', Returnstops: '1' }, { Amount: '786.24', Currency: 'EUR', DepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/KL.svg', DepartureAirport: 'London City Airport', DepartureCountry: 'GB', DepartureCode: 'LCY', DepartureTime: '08:40:00', DepartureDate: '2023-09-09', ArrivalAirport: 'Dubai International Airport', ArrivalCountry: 'AE', ArrivalCode: 'DXB', ArrivalTime: '23:05:00', ArrivalDate: '2023-09-09', Stops: '1' , ReturnDepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/KL.svg', ReturnDepartureAirport:'Dubai International Airport', ReturnDepartureCountry: 'AE', ReturnDepartureCode:'DXB', ReturnDepartureTime: '00:55:00', ReturnDepartureDate: '2023-09-16', ReturnArrivalAirport: 'London City Airport', ReturnArrivalCountry: 'GB',ReturnArrivalCode: 'LCY', ReturnArrivalTime: '09:25:00', ReturnArrivalDate: '2023-09-16', Returnstops: '1' }, { Amount: '809.24', Currency: 'EUR', DepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/KL.svg', DepartureAirport: 'London City Airport', DepartureCountry: 'GB', DepartureCode: 'LCY', DepartureTime: '08:40:00', DepartureDate: '2023-09-09', ArrivalAirport: 'Dubai International Airport', ArrivalCountry: 'AE', ArrivalCode: 'DXB', ArrivalTime: '23:05:00', ArrivalDate: '2023-09-09', Stops: '1' , ReturnDepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/KL.svg', ReturnDepartureAirport:'Dubai International Airport', ReturnDepartureCountry: 'AE', ReturnDepartureCode:'DXB', ReturnDepartureTime: '00:55:00', ReturnDepartureDate: '2023-09-16', ReturnArrivalAirport: 'London City Airport', ReturnArrivalCountry: 'GB',ReturnArrivalCode: 'LCY', ReturnArrivalTime: '08:10:00', ReturnArrivalDate: '2023-09-16', Returnstops: '1' }, { Amount: '809.24', Currency: 'EUR', DepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/KL.svg', DepartureAirport: 'London City Airport', DepartureCountry: 'GB', DepartureCode: 'LCY', DepartureTime: '10:00:00', DepartureDate: '2023-09-09', ArrivalAirport: 'Dubai International Airport', ArrivalCountry: 'AE', ArrivalCode: 'DXB', ArrivalTime: '23:05:00', ArrivalDate: '2023-09-09', Stops: '1' , ReturnDepartureFlightLogo: 'https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/KL.svg', ReturnDepartureAirport:'Dubai International Airport', ReturnDepartureCountry: 'AE', ReturnDepartureCode:'DXB', ReturnDepartureTime: '00:55:00', ReturnDepartureDate: '2023-09-16', ReturnArrivalAirport: 'London City Airport', ReturnArrivalCountry: 'GB',ReturnArrivalCode: 'LCY', ReturnArrivalTime: '08:10:00', ReturnArrivalDate: '2023-09-16', Returnstops: '1' }]
 export default function FlightSlider({ contentArray }) {
-
-    let APIData = contentArray
-    const arrayType = typeof APIData;
-    // const parsedArray = JSON.parse(contentArray);
     return (
         <>
-            <p>{APIData}</p>
             <Swiper
                 slidesPerView={2.5}
                 spaceBetween={10}
@@ -51,35 +14,31 @@ export default function FlightSlider({ contentArray }) {
                 modules={[Navigation]}
                 className="mySwiper w-full mt-4"
             >
-
-                {[].map((item) => (
-                    <SwiperSlide key={item.Amount} >
+                {contentArray.map((item) => (
+                    <SwiperSlide key={item.offerId}>
                         <FlightsCard
-                            Amount={item.Amount}
-                            Currency={item.Currency}
-                            DepartureFlightLogo={item.DepartureFlightLogo}
-                            DepartureTime={item.DepartureTime}
-                            DepartureCode={item.DepartureCode}
-                            ArrivalTime={item.ArrivalTime}
-                            ArrivalCode={item.ArrivalCode}
-                            ReturnDepartureFlightLogo={item.ReturnDepartureFlightLogo}
-                            ReturnDepartureTime={item.ReturnDepartureTime}
-                            ReturnArrivalTime={item.ReturnArrivalTime}
-                            ReturnDepartureCode={item.ReturnDepartureCode}
-                            ReturnArrivalCode={item.ReturnArrivalCode}
-                            DepartureAirport={item.DepartureAirport}
-                            ReturnDepartureAirport={item.ReturnDepartureAirport}
-                            Stops={item.Stops}
-                            Returnstops={item.Returnstops}
-                            DepartureDate={item.DepartureDate}
-                            ReturnDepartureDate={item.ReturnDepartureDate}
+                            Amount={item.total_amount}
+                            Currency={item.total_currency}
+                            DepartureFlightLogo={item.slices[0].departureFlightLogo}
+                            DepartureTime={item.slices[0].departureTime}
+                            DepartureCode={item.slices[0].origin_iata_code}
+                            ArrivalTime={item.slices[0].arrivalTime}
+                            ArrivalCode={item.slices[0].destination_iata_code}
+                            ReturnDepartureFlightLogo={item.slices[1].departureFlightLogo}
+                            ReturnDepartureTime={item.slices[1].departureTime}
+                            ReturnArrivalTime={item.slices[1].arrivalTime}
+                            ReturnDepartureCode={item.slices[1].origin_iata_code}
+                            ReturnArrivalCode={item.slices[1].destination_iata_code}
+                            DepartureAirport={item.slices[0].departureCity}
+                            ReturnDepartureAirport={item.slices[1].departureCity}
+                            Stops={item.slices[0].stops}
+                            Returnstops={item.slices[1].stops}
+                            DepartureDate={item.slices[0].departureDate}
+                            ReturnDepartureDate={item.slices[1].departureDate}
                         />
-
                     </SwiperSlide>
-
                 ))}
             </Swiper>
         </>
     );
 }
-

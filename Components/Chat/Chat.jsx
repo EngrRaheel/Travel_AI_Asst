@@ -4,7 +4,7 @@ import Input from "./Input";
 import ChatHeader from "./ChatHeader";
 import ChatMessages from "./ChatMessages";
 import { API_URL } from "../APIConfig/APIConfig";
-
+import HotelSlider from "../Hotels/HotelSlider";
 
 function Chat() {
     const [selectedLanguage, setSelectedLanguage] = useState("Speak in English");
@@ -22,10 +22,13 @@ function Chat() {
     const [selectedDateRange, setSelectedDateRange] = useState([null, null]);
 
     const [contentArray, setContentArray] = useState([]);
+    const [contentHotel, setContentHotel] = useState([]);
+
     const handleUpdateDateRange = (newDateRange) => {
         setSelectedDateRange(newDateRange);
         sendMessage(newDateRange)
     };
+
     const currentTime = new Date();
     const formattedTime = currentTime.toLocaleTimeString("en-US", {
         hour: "numeric",
@@ -44,29 +47,46 @@ function Chat() {
 
     const processResponseData = (data) => {
         console.log("data", data);
+        if (data.length == 2) {
 
-        return data.map((responseMessage) => {
+            if (data[0].text === "Flights Information") {
+                let recipient = data[0].text;
+                let content = data[1].custom;
+                setContentArray(content)
 
-            console.log("textt", responseMessage.text);
 
-            if (responseMessage.text.includes("$")) {
-                let [recipient, content] = responseMessage.text.split("$");
-                console.log("recipient or content", recipient, content)
-                setInputDisplay(recipient === "Location");
-                if (recipient === "Flights Information") {
-                    console.log("hello T", content)
-                    content = content.replace(/"/g, ' ');
-                    setContentArray(content);
-                    // console.log("updated content", updatedContentArray);
-                    // console.log("contentArray", contentArray);
-                    return { recipient, content };
-                } else {
-                    return { recipient, content };
-                }
-            } else {
-                return { content: responseMessage.text };
+                return [
+                    { recipient, content }
+                ];
             }
-        });
+            if (data[0].text === "Hotels Information") {
+                let recipient = data[0].text;
+                let content = data[1].custom;
+                setContentHotel(content)
+                return [
+                    { recipient, content }
+                ];
+            }
+        } else {
+            return data.map((responseMessage) => {
+                if (responseMessage.text.includes("$")) {
+                    let [recipient, content] = responseMessage.text.split("$");
+                    setInputDisplay(recipient === "Location");
+                    if (recipient === "Flights Information") {
+                        console.log("Before", content)
+                        content = content.replace(/"/g, '');
+                        console.log("After", content)
+                        setContentArray(content);
+                        return { recipient, content };
+                    } else {
+                        return { recipient, content };
+                    }
+                } else {
+                    return { content: responseMessage.text };
+                }
+            });
+        }
+
     };
 
     const sendMessage = async (message) => {
@@ -83,7 +103,7 @@ function Chat() {
             });
 
             const data = await response.json();
-
+            // console.log("data is here", data);
             const processedData = processResponseData(data);
 
             console.log("prcessed data hon main", processedData);
@@ -97,8 +117,8 @@ function Chat() {
                 ...processedData,
             ]);
 
-
-            console.log("processed data", processedData);
+            console.log("messages", messages);
+            // console.log("processed data", processedData);
             if (messagesContainerRef.current) {
                 messagesContainerRef.current.scrollIntoView({
                     behavior: "smooth",
@@ -143,10 +163,11 @@ function Chat() {
                     handleUpdateDateRange={handleUpdateDateRange}
                     setSelectedDateRange={setSelectedDateRange}
                     contentArray={contentArray}
+                    contentHotel={contentHotel}
 
                 />
             </div>
-
+       
             {inputDisplay ? (
                 <CityAutoComplete setCityName={setCityName} sendMessage={sendMessage} />
             ) : (
