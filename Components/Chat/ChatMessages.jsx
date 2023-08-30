@@ -24,7 +24,8 @@ function ChatMessages({
     setSelectedDateRange,
     sendMessages,
     contentArray,
-    contentHotel
+    contentHotel,
+   
 }) {
     return (
         <div

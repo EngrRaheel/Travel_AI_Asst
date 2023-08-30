@@ -32,7 +32,6 @@ export default function Slider({ contentHotel }) {
                                 min_h="450px"
                                 name={item.hotel.name}
                             />
-
                         ))}
                     </SwiperSlide>
                 ))}

@@ -1,14 +1,14 @@
 import React, { useState, useCallback } from 'react';
 import { BsSend } from 'react-icons/bs';
 
-const PlaceSearch = ({ setCityName, sendMessage }) => {
-  const [input, setInput] = useState('');
+const PlaceSearch = ({ setCityName, sendMessage, CityInput, setCityInput}) => {
+
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [suggestions, setSuggestions] = useState([]);
 
   const handleInputChange = useCallback((event) => {
     const inputValue = event.target.value;
-    setInput(inputValue);
+    setCityInput(inputValue);
 
     if (inputValue) {
       const autocompleteService = new window.google.maps.places.AutocompleteService();
@@ -33,7 +33,7 @@ const PlaceSearch = ({ setCityName, sendMessage }) => {
       if (status === window.google.maps.GeocoderStatus.OK && results[0]) {
         const selectedPlace = results[0];
         setSelectedPlace(selectedPlace);
-        setInput(selectedPlace.formatted_address);
+        setCityInput(selectedPlace.formatted_address);
         setSuggestions([]);
 
         const cityComponent = selectedPlace.address_components.find(
@@ -41,7 +41,8 @@ const PlaceSearch = ({ setCityName, sendMessage }) => {
         );
         const cityName = cityComponent ? cityComponent.short_name : '';
         setCityName(cityName);
-        
+
+
       }
     });
   }, [setCityName]);
@@ -64,7 +65,7 @@ const PlaceSearch = ({ setCityName, sendMessage }) => {
       <div className="flex mx-auto w-full relative">
         <input
           type="text"
-          value={input}
+          value={CityInput}
           placeholder="Enter a location"
           onChange={handleInputChange}
           className="w-full px-4 py-6 border border-y-[gray]/70 border-l-0 border-r-0 rounded outline-none "
@@ -72,7 +73,7 @@ const PlaceSearch = ({ setCityName, sendMessage }) => {
 
         <div className="absolute right-0 top-0 h-full flex justify-center items-center gap-3">
           <button
-            onClick={() => sendMessage(input)}
+            onClick={() => sendMessage(CityInput)}
             className="py-2 rounded-lg text-white px-6 outline-none"
           >
             <BsSend size={28} color="#5BB08B" />

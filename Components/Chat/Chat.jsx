@@ -16,6 +16,9 @@ function Chat() {
     const [messages, setMessages] = useState([]);
 
     const [input, setInput] = useState("");
+
+    const [cityInput, setCityInput] = useState("");
+
     const lastMessageRef = useRef(null);
     const messagesContainerRef = useRef(null);
     const [showSearchOptions, setShowSearchOptions] = useState(false);
@@ -127,6 +130,7 @@ function Chat() {
             }
             setInput("")
             setCityName("");
+            setCityInput("")
         } catch (error) {
             console.error("Error sending message:", error);
             setBotIsTyping(false);
@@ -167,9 +171,9 @@ function Chat() {
 
                 />
             </div>
-       
+
             {inputDisplay ? (
-                <CityAutoComplete setCityName={setCityName} sendMessage={sendMessage} />
+              <CityAutoComplete setCityName={setCityName} sendMessage={sendMessage} setCityInput={setCityInput} CityInput={cityInput} />
             ) : (
                 <Input input={input} setInput={setInput} sendMessage={sendMessage} />
             )}
