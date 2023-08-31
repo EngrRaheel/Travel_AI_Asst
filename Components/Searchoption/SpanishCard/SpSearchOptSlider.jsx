@@ -107,7 +107,7 @@ export default function Slider({ handleSendMessage, setMessage, handleOptSelecti
                             sendMessage={handleSendMessage}
                             setMessage={setMessage}
                             btnMessage={item.btnMessage}
-                            min_h={"160px"}
+                            // min_h="180px"
                         />
                     </SwiperSlide>
                 ))}

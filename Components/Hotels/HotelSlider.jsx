@@ -10,9 +10,6 @@ import HotelCard from "./HotelCard"
 export default function Slider({ contentHotel }) {
 
 
-    // const unescapeUrl = (url) => {
-    //     return url.replace(/\\\//g, '/');
-    // };
 
     return (
         <>
@@ -21,16 +18,19 @@ export default function Slider({ contentHotel }) {
                 spaceBetween={10}
                 navigation={true}
                 modules={[Navigation]}
-                className="mySwiper w-full "
+                className="mySwiper w-full"
             >
                 {contentHotel.map((item) => (
-                    <SwiperSlide key={item.hotel._id}>
-                        {item.hotel.images.map((image, index) => (
+                    <SwiperSlide key={item._id} >
+                        {item.images.map((image, index) => (
                             < HotelCard
                                 key={index}
-                                images={[image]}
+                                images={item.featuredImage}
                                 min_h="450px"
-                                name={item.hotel.name}
+                                name={item.name}
+                                address={item.address}
+                                rating={item.rating}
+
                             />
                         ))}
                     </SwiperSlide>

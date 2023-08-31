@@ -16,9 +16,7 @@ const CampaignDuration = ({ onUpdateDateRange, setMessages, sendMessage }) => {
 
         const formattedStartDate = startDate ? formatDate(startDate) : '';
         const formattedEndDate = endDate ? formatDate(endDate) : '';
-
         const message = `${formattedStartDate}`;
-
         function formatDate(dateString) {
             const parts = dateString.split('/');
             return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
@@ -73,7 +71,7 @@ const CampaignDuration = ({ onUpdateDateRange, setMessages, sendMessage }) => {
                         numberOfColumns={2}
                         columngap={16}
                         onChange={handleDateRangeChange}
-
+                        minDate={new Date()}
                     />
                 </div>
             </div>

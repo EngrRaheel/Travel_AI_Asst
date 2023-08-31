@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import CityAutoComplete from "../Cityautocomplete/CityAutoComplete";
 import Input from "./Input";
 import ChatHeader from "./ChatHeader";
@@ -10,6 +10,7 @@ function Chat() {
     const [selectedLanguage, setSelectedLanguage] = useState("Speak in English");
     const [serviceOption, setServiceOption] = useState("");
     const [inputDisplay, setInputDisplay] = useState(false);
+
     const [cityName, setCityName] = useState("");
     const [botIsTyping, setBotIsTyping] = useState(false);
 
@@ -27,18 +28,34 @@ function Chat() {
     const [contentArray, setContentArray] = useState([]);
     const [contentHotel, setContentHotel] = useState([]);
 
+
+    const [chatHeaderTime, setChatHeaderTime] = useState("");
+
+
     const handleUpdateDateRange = (newDateRange) => {
         setSelectedDateRange(newDateRange);
         sendMessage(newDateRange)
     };
 
-    const currentTime = new Date();
-    const formattedTime = currentTime.toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true,
-    });
+    function getFormattedTime() {
+        const getcurrentTime = new Date();
+        const getformattedTime = getcurrentTime.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+        });
+        return getformattedTime;
+    }
 
+    // Call the function to get the formatted time
+    const formattedTime = getFormattedTime();
+
+    useEffect(() => {
+        setChatHeaderTime(formattedTime);
+
+    }, []);
+
+    console.log("form", chatHeaderTime);
     useEffect(() => {
         if (lastMessageRef.current) {
             lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
@@ -48,26 +65,25 @@ function Chat() {
 
 
 
-    const processResponseData = (data) => {
+    const processResponseData = (data, botFormattedTime) => {
         console.log("data", data);
-        if (data.length == 2) {
-
+        if (data.length === 2) {
             if (data[0].text === "Flights Information") {
+
                 let recipient = data[0].text;
                 let content = data[1].custom;
-                setContentArray(content)
-
-
+                setContentArray(content);
                 return [
-                    { recipient, content }
+                    { recipient, content, timestamp: botFormattedTime }
                 ];
             }
             if (data[0].text === "Hotels Information") {
+
                 let recipient = data[0].text;
                 let content = data[1].custom;
-                setContentHotel(content)
+                setContentHotel(content);
                 return [
-                    { recipient, content }
+                    { recipient, content, timestamp: botFormattedTime }
                 ];
             }
         } else {
@@ -76,20 +92,35 @@ function Chat() {
                     let [recipient, content] = responseMessage.text.split("$");
                     setInputDisplay(recipient === "Location");
                     if (recipient === "Flights Information") {
-                        console.log("Before", content)
+                        console.log("Before", content);
                         content = content.replace(/"/g, '');
-                        console.log("After", content)
+                        console.log("After", content);
                         setContentArray(content);
-                        return { recipient, content };
+                        return { recipient, content, timestamp: botFormattedTime };
+                    }
+                    else if (recipient === "searchingflight") {
+                        // console.log("Before", content);
+                        // content = content.replace(/"/g, '');
+                        // console.log("After", content);
+                        // setContentArray(content);
+                        sendMessage("Send flight information");
+                        return { recipient, content, timestamp: botFormattedTime };
+                    }
+                    else if (recipient === "searchinghotels") {
+                        // console.log("Before", content);
+                        // content = content.replace(/"/g, '');
+                        // console.log("After", content);
+                        // setContentArray(content);
+                        sendMessage("Send hotel information");
+                        return { recipient, content, timestamp: botFormattedTime };
                     } else {
-                        return { recipient, content };
+                        return { recipient, content, timestamp: botFormattedTime };
                     }
                 } else {
-                    return { content: responseMessage.text };
+                    return { content: responseMessage.text, timestamp: botFormattedTime };
                 }
             });
         }
-
     };
 
     const sendMessage = async (message) => {
@@ -98,6 +129,11 @@ function Chat() {
         setBotIsTyping(true);
         const payload = { message };
 
+        // Set user's message before API call
+        setMessages([
+            ...messages,
+            { text: message, from: "user", timestamp: formattedTime },
+        ]);
         try {
             const response = await fetch(API_URL, {
                 method: "POST",
@@ -107,16 +143,17 @@ function Chat() {
 
             const data = await response.json();
             // console.log("data is here", data);
-            const processedData = processResponseData(data);
+            const botFormattedTime = getFormattedTime();
+
+            const processedData = processResponseData(data, botFormattedTime);
 
             console.log("prcessed data hon main", processedData);
 
 
 
             setBotIsTyping(false);
-            setMessages([
-                ...messages,
-                { text: message, from: "user", timestamp: formattedTime },
+            setMessages((prevMessages) => [
+                ...prevMessages,
                 ...processedData,
             ]);
 
@@ -150,7 +187,7 @@ function Chat() {
             <div className="flex flex-col px-2 py-4 w-full overflow-y-auto">
                 <ChatHeader
                     selectedLanguage={selectedLanguage}
-                    formattedTime={formattedTime}
+                    chatHeaderTime={chatHeaderTime}
                     handleLanguageSelection={handleLanguageSelection}
                     setSelectedLanguage={setSelectedLanguage}
                     setMessage={setMessages}
@@ -173,7 +210,7 @@ function Chat() {
             </div>
 
             {inputDisplay ? (
-              <CityAutoComplete setCityName={setCityName} sendMessage={sendMessage} setCityInput={setCityInput} CityInput={cityInput} />
+                <CityAutoComplete setCityName={setCityName} sendMessage={sendMessage} setCityInput={setCityInput} CityInput={cityInput} />
             ) : (
                 <Input input={input} setInput={setInput} sendMessage={sendMessage} />
             )}

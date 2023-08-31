@@ -130,7 +130,10 @@ body {
   margin-top: 8px;
 }
 
-
+.mantine-7yisjr[data-disabled] {
+  color: #ced4da !important;
+  cursor: not-allowed;
+}
 /* src/components/UserTyping.css */
 /* Typing.css */
 .typing-animation {
@@ -190,4 +193,13 @@ body {
 .right-half {
   right: -6px;
   bottom: 41%;
+}
+
+.min_h_hotel {
+  min-height: 120px;
+  
+}
+
+.min-h-opt {
+  min-height: 170px;
 }
