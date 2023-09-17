@@ -1,7 +1,7 @@
 import React from 'react'
 import Slider from '../Languages/Slider'
 import Image from '../Common/Image'
-
+import RecSlider from '../Languages/Recommendation/RecSlider'
 function ChatHeader({ selectedLanguage, chatHeaderTime, handleLanguageSelection, setSelectedLanguage, setMessages }) {
     return (
         <div className={`flex flex-col w-full"}`}  >
@@ -24,6 +24,12 @@ function ChatHeader({ selectedLanguage, chatHeaderTime, handleLanguageSelection,
             </div>
 
             <Slider
+                selectedLanguage={selectedLanguage}
+                setSelectedLanguage={setSelectedLanguage}
+                setMessage={setMessages}
+                handleLanguageSelection={handleLanguageSelection}
+            />
+            <RecSlider
                 selectedLanguage={selectedLanguage}
                 setSelectedLanguage={setSelectedLanguage}
                 setMessage={setMessages}

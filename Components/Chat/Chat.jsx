@@ -12,7 +12,7 @@ function Chat() {
     const [inputDisplay, setInputDisplay] = useState(false);
 
     const [cityName, setCityName] = useState("");
-    const [botIsTyping, setBotIsTyping] = useState(false);
+    const [botIsTyping, setBotIsTyping] = useState(false);  
 
     const [messages, setMessages] = useState([]);
 
@@ -103,7 +103,7 @@ function Chat() {
                         // content = content.replace(/"/g, '');
                         // console.log("After", content);
                         // setContentArray(content);
-                        sendMessage("Send flight information");
+                        setMessages("Send flight information");
                         return { recipient, content, timestamp: botFormattedTime };
                     }
                     else if (recipient === "searchinghotels") {
@@ -111,7 +111,7 @@ function Chat() {
                         // content = content.replace(/"/g, '');
                         // console.log("After", content);
                         // setContentArray(content);
-                        sendMessage("Send hotel information");
+                        setMessages("Send hotel information");
                         return { recipient, content, timestamp: botFormattedTime };
                     } else {
                         return { recipient, content, timestamp: botFormattedTime };
